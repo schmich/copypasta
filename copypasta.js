@@ -110,14 +110,20 @@ var copypasta = {
       return numMap[match];
     });
   },
+
+  braille: function(text) {
+    var order = " A1B'K2L@CIF/MSP\"E3H9O6R^DJG>NTQ,*5<-U8V.%[$+X!&;:4\\0Z7(_?W]#Y)=";
+    return text.toUpperCase().replace(/[ -_]/g, function(match) {
+      return String.fromCharCode(0x2800 + order.indexOf(match[0]));
+    });
+  },
 };
 
 var abc = 'a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9 + - = ( )';
-console.log(copypasta.circles(abc));
+console.log(copypasta.braille(abc));
 
 // TODO
 // Convert to HTML or straight Unicode characters
-// Braille: see http://en.wikipedia.org/wiki/Braille_ASCII
 // Numbers
 // Zalgo text, descenders/ascenders: http://www.marlborotech.com/Zalgo.html
 // command-line interface
