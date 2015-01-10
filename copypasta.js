@@ -21,6 +21,12 @@ function alphaMap(text, lowerMap, upperMap) {
   });
 }
 
+function numMap(text, map) {
+  return text.replace(/[0-9]/g, function(match) {
+    return map[match.charCodeAt(0) - 48];
+  });
+}
+
 var copypasta = {
   fullWidth: function(text) {
     return text.replace(/[!-~]/g, function(match) {
@@ -29,11 +35,10 @@ var copypasta = {
   },
 
   circles: function(text) {
-    return text.replace(/[a-z]/g, function(match) {
-      return offset(match, 74960 - 97);
-    }).replace(/[A-Z]/g, function(match) {
-      return offset(match, 74934 - 65);
-    });
+    var lowerMap = "ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ";
+    var upperMap = "ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ";
+    var numericMap = "⓪①②③④⑤⑥⑦⑧⑨";
+    return numMap(alphaMap(text, lowerMap, upperMap), numericMap);
   },
 
   parens: function(text) {
@@ -108,13 +113,13 @@ var copypasta = {
 };
 
 var abc = 'a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9 + - = ( )';
-console.log(copypasta.flip(abc));
+console.log(copypasta.circles(abc));
 
 // TODO
 // Convert to HTML or straight Unicode characters
 // Braille: see http://en.wikipedia.org/wiki/Braille_ASCII
 // Numbers
-// Descenders/ascenders
+// Zalgo text, descenders/ascenders: http://www.marlborotech.com/Zalgo.html
 // command-line interface
 // copy to clipboard
 // copypasta --circles "hello, world"
